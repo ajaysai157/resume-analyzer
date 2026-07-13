@@ -5,7 +5,7 @@ const app=express();
 app.use(express.json());
 app.use(cors());
 app.use('/api/auth', authRoutes);
-
+app.use('/api/analyze', analyzeRoutes);
 app.get('/',(req,res)=>{
     res.status(200).json({
     message: "AI Resume Analyzer API Running"
