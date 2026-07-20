@@ -1,6 +1,6 @@
 import express from "express";
 import historyController from "../controllers/historyController.js";
-import checkAuth from "../middleware/checkAuth.js";
+import checkAuth from "../middleware/auth.js";
 
 const router = express.Router();
 
