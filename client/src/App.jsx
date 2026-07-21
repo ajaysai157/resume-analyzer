@@ -15,7 +15,6 @@ function App() {
         <Route path="/" element={<Navigate to="/login" />} />
 
         <Route path="/login" element={<Login />} />
-
         <Route path="/register" element={<Register />} />
 
         <Route
@@ -26,29 +25,7 @@ function App() {
             </ProtectedRoute>
           }
         />
-                <Route
-            path="/history"
-            element={
-                <ProtectedRoute>
-                    <History />
-                </ProtectedRoute>
-            }
-        />
-                <Route
 
-            path="/history/:id"
-
-            element={
-
-                <ProtectedRoute>
-
-                    <AnalysisDetails />
-
-                </ProtectedRoute>
-
-            }
-
-        />
         <Route
           path="/analyze"
           element={
@@ -57,7 +34,7 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route path="*" element={<NotFound />} />
+
         <Route
           path="/history"
           element={
@@ -66,6 +43,17 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        <Route
+          path="/history/:id"
+          element={
+            <ProtectedRoute>
+              <AnalysisDetails />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route path="*" element={<h1>404 - Page Not Found</h1>} />
       </Routes>
     </BrowserRouter>
   );

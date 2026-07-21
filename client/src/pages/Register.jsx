@@ -66,7 +66,12 @@ const Register = () => {
 
         <div className="container">
 
-            <h1>Register</h1>
+                        <>
+            <h1>Create Account 🚀</h1>
+            <p style={{marginBottom:"25px",marginTop:"5px"}}>
+            Create your AI Resume Analyzer account
+            </p>
+            </>
 
             <form onSubmit={handleSubmit}>
 

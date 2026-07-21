@@ -1,126 +1,193 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { FiSearch } from "react-icons/fi";
 
 import Navbar from "../components/Navbar";
 import HistoryCard from "../components/HistoryCard";
 import EmptyState from "../components/EmptyState";
 import LoadingSpinner from "../components/LoadingSpinner";
+
 import {
-    getHistory,
-    deleteHistory,
+  getHistory,
+  deleteHistory,
 } from "../api/historyApi";
 
+import { useNavigate } from "react-router-dom";
+
 const History = () => {
-    const navigate = useNavigate();
-    const [history, setHistory] = useState([]);
 
-    const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
-    const fetchHistory = async () => {
+  const [history, setHistory] = useState([]);
 
-        try {
+  const [filtered, setFiltered] = useState([]);
 
-            const data = await getHistory();
+  const [search, setSearch] = useState("");
 
-            setHistory(data.history);
+  const [loading, setLoading] = useState(true);
 
-        } catch (err) {
+  const fetchHistory = async () => {
 
-            console.log(err);
+    try {
 
-        } finally {
+      const data = await getHistory();
 
-            setLoading(false);
+      setHistory(data.history);
 
-        }
+      setFiltered(data.history);
 
-    };
+    } catch (err) {
 
-    useEffect(() => {
+      console.log(err);
 
-        fetchHistory();
+    } finally {
 
-    }, []);
+      setLoading(false);
 
-    const handleDelete = async (id) => {
+    }
 
-        const confirmDelete = window.confirm(
-            "Delete this analysis?"
-        );
+  };
 
-        if (!confirmDelete) return;
+  useEffect(() => {
 
-        await deleteHistory(id);
+    fetchHistory();
 
-        setHistory((prev) =>
-            prev.filter((item) => item._id !== id)
-        );
+  }, []);
 
-    };
+  useEffect(() => {
 
-          const handleView = (id) => {
+    const result = history.filter((item) =>
+      item.resumeName
+        ?.toLowerCase()
+        .includes(search.toLowerCase())
+    );
 
-          navigate(`/history/${id}`);
+    setFiltered(result);
 
-      };
+  }, [search, history]);
 
-    if (loading)
-        return <LoadingSpinner />;
+  const handleDelete = async (id) => {
 
-    return (
+    if (!window.confirm("Delete this analysis?"))
+      return;
 
-        <>
-            <Navbar />
+    await deleteHistory(id);
 
-            <div className="max-w-6xl mx-auto px-6 py-10">
+    const updated = history.filter(
+      (item) => item._id !== id
+    );
 
-                <h1 className="text-4xl font-bold mb-10">
+    setHistory(updated);
 
-                    Analysis History
+    setFiltered(updated);
 
-                </h1>
+  };
 
-                {
+  const handleView = (id) => {
 
-                    history.length === 0
+    navigate(`/history/${id}`);
 
-                    ?
+  };
 
-                    <EmptyState />
+  if (loading)
+    return <LoadingSpinner />;
 
-                    :
+  return (
 
-                    <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+    <>
+      <Navbar />
 
-                        {
+      <div className="min-h-screen bg-slate-50">
 
-                            history.map((item) => (
+        <div className="max-w-7xl mx-auto px-8 py-10">
 
-                                <HistoryCard
+          <div className="flex justify-between items-center flex-wrap gap-5">
 
-                                    key={item._id}
+            <div>
 
-                                    analysis={item}
+              <h1 className="text-5xl font-bold text-slate-800">
 
-                                    onDelete={handleDelete}
+                Analysis History
 
-                                    onView={handleView}
+              </h1>
 
-                                />
+              <p className="text-slate-500 mt-3">
 
-                            ))
+                View all your previous ATS reports.
 
-                        }
-
-                    </div>
-
-                }
+              </p>
 
             </div>
 
-        </>
+            <div className="relative">
 
-    );
+              <FiSearch
+                className="absolute left-4 top-4 text-gray-400"
+              />
+
+              <input
+                type="text"
+                placeholder="Search Resume..."
+                value={search}
+                onChange={(e) =>
+                  setSearch(e.target.value)
+                }
+                className="pl-12 pr-5 py-4 rounded-2xl w-80 border focus:ring-4 focus:ring-indigo-100"
+              />
+
+            </div>
+
+          </div>
+
+          <div className="mt-10 bg-white rounded-3xl shadow-lg p-6">
+
+            <div className="flex justify-between items-center mb-8">
+
+              <h2 className="text-2xl font-bold">
+
+                Total Reports
+
+              </h2>
+
+              <span className="bg-indigo-100 text-indigo-700 px-5 py-2 rounded-full font-bold">
+
+                {filtered.length}
+
+              </span>
+
+            </div>
+
+            {filtered.length === 0 ? (
+
+              <EmptyState />
+
+            ) : (
+
+              <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8">
+
+                {filtered.map((item) => (
+
+                  <HistoryCard
+                    key={item._id}
+                    analysis={item}
+                    onDelete={handleDelete}
+                    onView={handleView}
+                  />
+
+                ))}
+
+              </div>
+
+            )}
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </>
+
+  );
 
 };
 

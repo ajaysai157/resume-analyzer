@@ -6,8 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon server.js",
-    
-  "start": "node server.js"
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
@@ -23,12 +22,11 @@
     "express-validator": "^7.3.2",
     "helmet": "^8.2.0",
     "jsonwebtoken": "^9.0.3",
-    "mongoose": "^9.7.3",
+    "mongoose": "^8.19.1",
     "morgan": "^1.11.0",
     "multer": "^2.2.0",
-    "pdf-parse": "^2.4.5"
+    "pdf-parse": "^1.1.1"
   },
-  
   "devDependencies": {
     "nodemon": "^3.1.14"
   }

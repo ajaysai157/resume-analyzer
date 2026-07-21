@@ -4,7 +4,6 @@ import Navbar from "../components/Navbar";
 import UploadBox from "../components/UploadBox";
 import JobDescriptionBox from "../components/JobDescriptionBox";
 import AnalyzeButton from "../components/AnalyzeButton";
-import ScoreCard from "../components/ScoreCard";
 import ResultsDashboard from "../components/ResultsDashboard";
 
 import { analyzeResume } from "../api/analyzeApi";
@@ -68,62 +67,62 @@ const Analyze = () => {
     };
 
     return (
+  <>
+    <Navbar />
 
-        <>
-            <Navbar />
+    <div className="min-h-screen bg-slate-50">
 
-            <div className="max-w-7xl mx-auto px-6 py-10">
+      <div className="max-w-7xl mx-auto px-8 py-10">
 
-                <h1 className="text-4xl font-bold text-center mb-10">
+        <div className="text-center mb-14">
 
-                    AI Resume Analyzer
+          <h1 className="text-5xl font-bold text-slate-800">
+            AI Resume Analyzer
+          </h1>
 
-                </h1>
+          <p className="text-gray-500 mt-4 text-lg">
+            Upload your resume and compare it against a Job Description using AI.
+          </p>
 
-                <form
-                    onSubmit={handleSubmit}
-                    className="grid lg:grid-cols-2 gap-8"
-                >
+        </div>
 
-                    <UploadBox
-                        file={file}
-                        setFile={setFile}
-                    />
+        <form
+          onSubmit={handleSubmit}
+          className="grid xl:grid-cols-2 gap-10 items-start"
+        >
 
-                    <JobDescriptionBox
-                        value={jobDescription}
-                        onChange={setJobDescription}
-                    />
+          <UploadBox
+            file={file}
+            setFile={setFile}
+          />
 
-                    <div className="lg:col-span-2">
+          <JobDescriptionBox
+            value={jobDescription}
+            onChange={setJobDescription}
+          />
 
-                        <AnalyzeButton
-                            loading={loading}
-                            disabled={
-                                !file ||
-                                !jobDescription.trim()
-                            }
-                        />
+          <div className="xl:col-span-2">
 
-                    </div>
+            <AnalyzeButton
+              loading={loading}
+              disabled={!file || !jobDescription.trim()}
+            />
 
-                </form>
+          </div>
 
-                {
-                analysis && (
+        </form>
 
-                    <ResultsDashboard
-                        analysis={analysis}
-                    />
+        {analysis && (
+          <div className="mt-14">
+            <ResultsDashboard analysis={analysis} />
+          </div>
+        )}
 
-                )
-            }   
+      </div>
 
-            </div>
-
-        </>
-
-    );
+    </div>
+  </>
+);
 
 };
 

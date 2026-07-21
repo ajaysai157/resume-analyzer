@@ -1,80 +1,68 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 const Navbar = () => {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-    const { user, logout } = useAuth();
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
 
-    const navigate = useNavigate();
+  const active = (path) =>
+    location.pathname === path
+      ? "text-indigo-600 bg-indigo-50"
+      : "text-gray-600";
 
-    const handleLogout = () => {
+  return (
+    <nav className="sticky top-0 z-50 bg-white border-b shadow-sm">
+      <div className="max-w-7xl mx-auto h-20 flex justify-between items-center px-6">
 
-        logout();
+        <h1 className="text-2xl font-bold text-indigo-600">
+          AI Resume Analyzer
+        </h1>
 
-        navigate("/login");
+        <div className="flex items-center gap-3">
 
-    };
+          <Link
+            to="/dashboard"
+            className={`px-4 py-2 rounded-xl font-medium transition ${active("/dashboard")}`}
+          >
+            Dashboard
+          </Link>
 
-    return (
+          <Link
+            to="/analyze"
+            className={`px-4 py-2 rounded-xl font-medium transition ${active("/analyze")}`}
+          >
+            Analyze
+          </Link>
 
-        <nav
-            style={{
-                display: "flex",
-                justifyContent: "space-between",
-                padding: "15px 40px",
-                background: "#667eea",
-                color: "#fff",
-                alignItems: "center",
-            }}
-        >
+          <Link
+            to="/history"
+            className={`px-4 py-2 rounded-xl font-medium transition ${active("/history")}`}
+          >
+            History
+          </Link>
 
-            <h2>AI Resume Analyzer</h2>
+          <div className="ml-6 text-right">
+            <p className="font-semibold">{user?.name}</p>
+            <p className="text-xs text-gray-500">{user?.email}</p>
+          </div>
 
-            <div
-                style={{
-                    display: "flex",
-                    gap: "20px",
-                    alignItems: "center",
-                }}
-            >
+          <button
+            onClick={handleLogout}
+            className="ml-4 bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-xl"
+          >
+            Logout
+          </button>
 
-                <Link
-                    to="/dashboard"
-                    style={{ color: "#fff", textDecoration: "none" }}
-                >
-                    Dashboard
-                </Link>
-
-                <Link
-                    to="/analyze"
-                    style={{ color: "#fff", textDecoration: "none" }}
-                >
-                    Analyze
-                </Link>
-
-                <Link
-                    to="/history"
-                    style={{ color: "#fff", textDecoration: "none" }}
-                >
-                    History
-                </Link>
-
-                <span>
-                    {user?.name}
-                </span>
-
-                <button
-                    onClick={handleLogout}
-                >
-                    Logout
-                </button>
-
-            </div>
-
-        </nav>
-
-    );
-
+        </div>
+      </div>
+    </nav>
+  );
 };
 
 export default Navbar;

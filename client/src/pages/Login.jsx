@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { loginUser } from "../api/authApi";
 import { useAuth } from "../context/AuthContext";
+import toast from "react-hot-toast";
 
 const Login = () => {
 
@@ -37,16 +38,15 @@ const Login = () => {
 
             login(data.token, data.user);
 
-            alert("Login Successful");
+            
+
+            toast.success("Login Successful");
 
             navigate("/dashboard");
 
         } catch (error) {
 
-            alert(
-                error.response?.data?.message ||
-                "Login Failed"
-            );
+            toast.error("Analysis Failed");
 
         } finally {
 
@@ -60,7 +60,12 @@ const Login = () => {
 
         <div className="container">
 
-            <h1>Login</h1>
+            <>
+            <h1>Welcome Back 👋</h1>
+            <p style={{marginBottom:"25px",marginTop:"5px"}}>
+            Login to continue analyzing resumes
+            </p>
+            </>
 
             <form onSubmit={handleSubmit}>
 

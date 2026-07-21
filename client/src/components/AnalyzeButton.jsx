@@ -1,44 +1,22 @@
-import { FiZap } from "react-icons/fi";
+const AnalyzeButton = ({ loading, disabled }) => {
+  return (
+    <button
+      disabled={disabled || loading}
+      className="w-full py-5 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white text-lg font-semibold transition shadow-xl disabled:bg-gray-400"
+    >
+      {loading ? (
+        <div className="flex justify-center items-center gap-3">
 
-const AnalyzeButton = ({
-    loading,
-    disabled,
-}) => {
+          <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
 
-    return (
+          Analyzing Resume...
 
-        <button
-            type="submit"
-            disabled={disabled || loading}
-            className={`w-full py-4 rounded-xl font-semibold text-white transition-all duration-300 flex justify-center items-center gap-3
-
-            ${
-                disabled || loading
-                    ? "bg-gray-400 cursor-not-allowed"
-                    : "bg-indigo-600 hover:bg-indigo-700"
-            }`}
-        >
-
-            {
-                loading
-                    ? (
-                        <>
-                            <div className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                            Analyzing...
-                        </>
-                    )
-                    : (
-                        <>
-                            <FiZap size={20}/>
-                            Analyze Resume
-                        </>
-                    )
-            }
-
-        </button>
-
-    );
-
+        </div>
+      ) : (
+        "🚀 Analyze Resume"
+      )}
+    </button>
+  );
 };
 
 export default AnalyzeButton;

@@ -1,8 +1,6 @@
 @import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 
-body{
-    background:#f5f7fb;
-}
 *{
     margin:0;
     padding:0;
@@ -10,46 +8,118 @@ body{
 }
 
 body{
-    font-family:Arial,Helvetica,sans-serif;
-    background:#f4f7fb;
+    font-family:"Poppins",sans-serif;
+    background:linear-gradient(
+        180deg,
+        #eef2ff 0%,
+        #f8fafc 40%,
+        #ffffff 100%
+    );
+    min-height:100vh;
+}
+
+#root{
+    width:100%;
 }
 
 .container{
-    width:400px;
-    margin:80px auto;
-    background:white;
-    padding:30px;
-    border-radius:12px;
-    box-shadow:0 0 15px rgba(0,0,0,.1);
+    width:100%;
+    max-width:430px;
+    margin:auto;
+    background:#fff;
+    padding:40px;
+    border-radius:20px;
+    box-shadow:0 20px 50px rgba(0,0,0,.08);
+}
+
+.container h1{
+    text-align:center;
+    font-size:34px;
+    margin-bottom:8px;
+    color:#1e293b;
+}
+
+.container::before{
+    content:"AI Resume Analyzer";
+    display:block;
+    text-align:center;
+    font-size:14px;
+    color:#667eea;
+    font-weight:600;
+    letter-spacing:1px;
+    margin-bottom:8px;
+}
+
+form{
+    margin-top:25px;
 }
 
 input{
     width:100%;
-    padding:12px;
-    margin:12px 0;
-    border:1px solid #ddd;
-    border-radius:6px;
+    padding:15px 18px;
+    margin-bottom:18px;
+    border:1px solid #dbe4ff;
+    border-radius:12px;
+    font-size:15px;
+    transition:.3s;
+    outline:none;
+}
+
+input:focus{
+    border-color:#667eea;
+    box-shadow:0 0 0 4px rgba(102,126,234,.15);
 }
 
 button{
     width:100%;
-    padding:12px;
+    padding:15px;
     border:none;
-    border-radius:6px;
+    border-radius:12px;
     background:#667eea;
-    color:white;
-    cursor:pointer;
+    color:#fff;
     font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
 }
 
 button:hover{
-    background:#5568d8;
+    background:#4f46e5;
+    transform:translateY(-2px);
 }
 
-a{
-    text-decoration:none;
+button:disabled{
+    opacity:.7;
+    cursor:not-allowed;
 }
 
 p{
-    margin-top:20px;
+    margin-top:25px;
+    text-align:center;
+    color:#64748b;
+    font-size:15px;
+}
+
+a{
+    margin-left:6px;
+    color:#4f46e5;
+    font-weight:600;
+    text-decoration:none;
+}
+
+a:hover{
+    text-decoration:underline;
+}
+
+@media(max-width:500px){
+
+.container{
+    width:92%;
+    padding:30px 25px;
+}
+
+.container h1{
+    font-size:28px;
+}
+
 }
