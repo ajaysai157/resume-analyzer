@@ -45,7 +45,7 @@ const Analyze = () => {
         {/* Page Header */}
         <div className="text-center max-w-3xl mx-auto mb-12">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 text-xs font-extrabold mb-4">
-            <FiCpu className="text-indigo-400" /> Powered by Google Gemini AI
+            <FiCpu className="text-indigo-400" /> Powered by GROQ AI
           </div>
           <h1 className="text-4xl sm:text-5xl font-black text-white tracking-tight">
             AI Resume <span className="text-gradient">Analyzer</span>
