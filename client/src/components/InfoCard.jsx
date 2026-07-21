@@ -1,82 +1,45 @@
-const InfoCard = ({
-  title,
-  icon,
-  items,
-  color,
-}) => {
+const InfoCard = ({ title, icon, items, isPositive }) => {
   return (
-    <div className="bg-white rounded-3xl shadow-xl p-8 h-full">
-
-      {/* Header */}
-
-      <div className="flex items-center gap-4 mb-8">
-
-        <div className="w-14 h-14 rounded-2xl bg-slate-100 flex items-center justify-center text-3xl">
-
-          {icon}
-
+    <div className="glass-card rounded-3xl p-7 border border-slate-800 shadow-xl flex flex-col h-full">
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center gap-3">
+          <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-lg border ${
+            isPositive
+              ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30"
+              : "bg-amber-500/10 text-amber-400 border-amber-500/30"
+          }`}>
+            {icon}
+          </div>
+          <div>
+            <h3 className="text-lg font-black text-white tracking-tight">{title}</h3>
+            <p className="text-xs text-slate-400">{items.length} Key Insights</p>
+          </div>
         </div>
-
-        <div>
-
-          <h2 className={`text-2xl font-bold ${color}`}>
-            {title}
-          </h2>
-
-          <p className="text-slate-500 text-sm mt-1">
-            {items.length} Points Found
-          </p>
-
-        </div>
-
       </div>
 
-      {/* Body */}
-
       {items.length === 0 ? (
-
-        <div className="border-2 border-dashed border-slate-200 rounded-2xl py-10 text-center">
-
-          <p className="text-slate-500">
-
-            Nothing to display
-
-          </p>
-
+        <div className="flex-1 border-2 border-dashed border-slate-800 rounded-2xl py-8 text-center flex flex-col items-center justify-center">
+          <p className="text-slate-500 text-xs">No points recorded</p>
         </div>
-
       ) : (
-
-        <div className="space-y-5">
-
+        <div className="space-y-3 flex-1">
           {items.map((item, index) => (
-
             <div
               key={index}
-              className="flex items-start gap-4 p-4 rounded-2xl bg-slate-50 hover:bg-slate-100 transition-all duration-300"
+              className="flex items-start gap-3 p-3.5 rounded-2xl bg-slate-950/60 border border-slate-800/80 hover:border-slate-700 transition"
             >
-
               <div
-                className={`w-8 h-8 rounded-full flex items-center justify-center text-white font-bold ${color.replace(
-                  "text",
-                  "bg"
-                )}`}
+                className={`w-5 h-5 rounded-lg flex items-center justify-center text-xs font-bold shrink-0 mt-0.5 ${
+                  isPositive ? "bg-emerald-500/20 text-emerald-400" : "bg-amber-500/20 text-amber-400"
+                }`}
               >
-                ✓
+                {isPositive ? "✓" : "!"}
               </div>
-
-              <p className="text-slate-700 leading-7">
-                {item}
-              </p>
-
+              <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">{item}</p>
             </div>
-
           ))}
-
         </div>
-
       )}
-
     </div>
   );
 };

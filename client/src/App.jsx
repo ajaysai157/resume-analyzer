@@ -6,6 +6,7 @@ import Dashboard from "./pages/Dashboard";
 import Analyze from "./pages/Analyze";
 import History from "./pages/History";
 import AnalysisDetails from "./pages/AnalysisDetails";
+import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
@@ -53,7 +54,7 @@ function App() {
           }
         />
 
-        <Route path="*" element={<h1>404 - Page Not Found</h1>} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

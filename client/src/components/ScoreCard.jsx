@@ -1,131 +1,91 @@
-import {
-  CircularProgressbar,
-  buildStyles,
-} from "react-circular-progressbar";
-
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import { FiCheckCircle, FiAlertCircle, FiAward } from "react-icons/fi";
 
 const ScoreCard = ({ score }) => {
-
   let message = "Needs Improvement";
   let color = "#ef4444";
+  let badgeStyle = "bg-rose-500/10 text-rose-400 border-rose-500/30";
   let grade = "C";
 
   if (score >= 90) {
-    message = "Outstanding";
-    color = "#16a34a";
+    message = "Outstanding ATS Match";
+    color = "#10b981";
+    badgeStyle = "bg-emerald-500/10 text-emerald-400 border-emerald-500/30";
     grade = "A+";
   } else if (score >= 80) {
     message = "Excellent Match";
-    color = "#22c55e";
+    color = "#10b981";
+    badgeStyle = "bg-emerald-500/10 text-emerald-400 border-emerald-500/30";
     grade = "A";
   } else if (score >= 70) {
     message = "Good Match";
-    color = "#3b82f6";
+    color = "#6366f1";
+    badgeStyle = "bg-indigo-500/10 text-indigo-400 border-indigo-500/30";
     grade = "B+";
   } else if (score >= 60) {
     message = "Average Match";
     color = "#f59e0b";
+    badgeStyle = "bg-amber-500/10 text-amber-400 border-amber-500/30";
     grade = "B";
   }
 
   return (
-    <div className="bg-white rounded-3xl shadow-xl p-10">
-
-      <div className="grid lg:grid-cols-2 gap-12 items-center">
-
-        {/* Left */}
-
-        <div className="flex justify-center">
-
-          <div className="w-64">
-
+    <div className="glass-card rounded-3xl p-8 sm:p-10 border border-slate-800 shadow-2xl relative overflow-hidden">
+      <div className="grid lg:grid-cols-2 gap-10 items-center">
+        {/* Circular Progress Gauge */}
+        <div className="flex justify-center items-center relative py-4">
+          <div className="w-56 h-56 relative">
             <CircularProgressbar
               value={score}
               text={`${score}%`}
               styles={buildStyles({
                 pathColor: color,
-                textColor: "#0f172a",
-                trailColor: "#e2e8f0",
+                textColor: "#ffffff",
+                trailColor: "rgba(30, 41, 59, 0.8)",
                 strokeLinecap: "round",
-                textSize: "16px",
+                textSize: "22px",
               })}
             />
-
           </div>
-
         </div>
 
-        {/* Right */}
-
-        <div>
-
-          <h2 className="text-4xl font-bold text-slate-800">
-
-            ATS Resume Score
-
-          </h2>
-
-          <p className="text-slate-500 mt-3">
-
-            This score indicates how well your resume matches
-            the provided Job Description.
-
-          </p>
-
-          <div className="mt-8 flex gap-4 flex-wrap">
-
-            <div
-              className="px-6 py-3 rounded-2xl text-white font-bold"
-              style={{ background: color }}
-            >
+        {/* Breakdown Text */}
+        <div className="space-y-5">
+          <div className="flex items-center gap-3">
+            <span className={`px-4 py-1.5 rounded-full border text-xs font-black tracking-wider uppercase ${badgeStyle}`}>
               {message}
-            </div>
-
-            <div className="px-6 py-3 rounded-2xl bg-slate-100 font-bold">
-
-              Grade : {grade}
-
-            </div>
-
+            </span>
+            <span className="px-3.5 py-1 rounded-full bg-slate-900 border border-slate-800 text-xs font-bold text-slate-300">
+              Grade: {grade}
+            </span>
           </div>
 
-          <div className="mt-10">
+          <h2 className="text-3xl font-black text-white tracking-tight">
+            ATS Compatibility Score
+          </h2>
 
-            <div className="flex justify-between mb-2">
+          <p className="text-slate-400 text-sm leading-relaxed">
+            This AI-calculated score reflects how well your resume align with key skills, tools, requirements, and keywords in the job posting.
+          </p>
 
-              <span className="text-gray-500">
-
-                Resume Compatibility
-
-              </span>
-
-              <span className="font-bold">
-
-                {score}%
-
-              </span>
-
+          <div className="pt-4 border-t border-slate-800/80">
+            <div className="flex justify-between items-center text-xs font-bold mb-2">
+              <span className="text-slate-400">Match Percentage</span>
+              <span className="text-white">{score}% / 100%</span>
             </div>
-
-            <div className="h-4 rounded-full bg-slate-200 overflow-hidden">
-
+            <div className="h-3 rounded-full bg-slate-900 overflow-hidden border border-slate-800 p-0.5">
               <div
-                className="h-full rounded-full transition-all duration-700"
+                className="h-full rounded-full transition-all duration-1000 shadow-glow"
                 style={{
                   width: `${score}%`,
                   background: color,
                 }}
               />
-
             </div>
-
           </div>
-
         </div>
-
       </div>
-
     </div>
   );
 };

@@ -5,196 +5,148 @@ import RecentAnalysisCard from "../components/RecentAnalysisCard";
 import LoadingSpinner from "../components/LoadingSpinner";
 import { Link } from "react-router-dom";
 import { getDashboardData } from "../api/dashboardApi";
+import { useAuth } from "../context/AuthContext";
+import { FiPlusCircle, FiBarChart2, FiAward, FiZap, FiArrowRight, FiFileText } from "react-icons/fi";
 
 const Dashboard = () => {
+  const { user } = useAuth();
+  const [loading, setLoading] = useState(true);
+  const [history, setHistory] = useState([]);
 
-    const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getDashboardData();
+        setHistory(data.history || []);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
 
-    const [history, setHistory] = useState([]);
+  if (loading) {
+    return <LoadingSpinner />;
+  }
 
-    useEffect(() => {
+  const total = history.length;
+  const highest = total ? Math.max(...history.map((item) => item.atsScore)) : 0;
+  const average = total
+    ? Math.round(history.reduce((sum, item) => sum + item.atsScore, 0) / total)
+    : 0;
 
-        const fetchData = async () => {
+  const recent = [...history]
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+    .slice(0, 5);
 
-            try {
+  return (
+    <div className="min-h-screen bg-slate-950 bg-mesh text-slate-100 pb-16">
+      <Navbar />
 
-                const data = await getDashboardData();
-
-                setHistory(data.history);
-
-            } catch (error) {
-
-                console.log(error);
-
-            } finally {
-
-                setLoading(false);
-
-            }
-
-        };
-
-        fetchData();
-
-    }, []);
-
-    if (loading) {
-
-        return <LoadingSpinner />;
-
-    }
-
-    const total = history.length;
-
-    const highest = total
-        ? Math.max(...history.map(item => item.atsScore))
-        : 0;
-
-    const average = total
-        ? Math.round(
-              history.reduce(
-                  (sum, item) => sum + item.atsScore,
-                  0
-              ) / total
-          )
-        : 0;
-
-    const recent = [...history]
-        .sort(
-            (a, b) =>
-                new Date(b.createdAt) -
-                new Date(a.createdAt)
-        )
-        .slice(0, 5);
-
-    return (
-
-        <>
-  <Navbar />
-
-  <div className="min-h-screen bg-slate-50">
-
-    <div className="max-w-7xl mx-auto px-8 py-10">
-
-      <div className="flex justify-between items-center">
-
-        <div>
-          <h1 className="text-4xl font-bold text-slate-800">
-            Welcome Back 👋
-          </h1>
-
-          <p className="text-slate-500 mt-2">
-            Here's an overview of your resume analyses.
-          </p>
-        </div>
-
-        <Link
-          to="/analyze"
-          className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-xl font-semibold shadow-lg"
-        >
-          + Analyze Resume
-        </Link>
-
-      </div>
-
-      <div className="grid lg:grid-cols-3 gap-8 mt-10">
-
-        <div className="bg-white rounded-2xl shadow-md p-8 hover:shadow-xl transition">
-
-          <p className="text-gray-500 text-sm">
-            Total Analyses
-          </p>
-
-          <h2 className="text-5xl font-bold mt-3 text-indigo-600">
-            {total}
-          </h2>
-
-        </div>
-
-        <div className="bg-white rounded-2xl shadow-md p-8 hover:shadow-xl transition">
-
-          <p className="text-gray-500 text-sm">
-            Average ATS Score
-          </p>
-
-          <h2 className="text-5xl font-bold mt-3 text-green-600">
-            {average}%
-          </h2>
-
-        </div>
-
-        <div className="bg-white rounded-2xl shadow-md p-8 hover:shadow-xl transition">
-
-          <p className="text-gray-500 text-sm">
-            Highest ATS Score
-          </p>
-
-          <h2 className="text-5xl font-bold mt-3 text-purple-600">
-            {highest}%
-          </h2>
-
-        </div>
-
-      </div>
-
-      <div className="bg-white rounded-2xl shadow-md p-8 mt-12">
-
-        <div className="flex justify-between items-center">
-
-          <h2 className="text-2xl font-bold">
-            Recent Analyses
-          </h2>
-
-          <Link
-            to="/history"
-            className="text-indigo-600 font-semibold"
-          >
-            View All →
-          </Link>
-
-        </div>
-
-        <div className="mt-6 space-y-5">
-
-          {recent.length > 0 ? (
-            recent.map((analysis) => (
-              <RecentAnalysisCard
-                key={analysis._id}
-                analysis={analysis}
-              />
-            ))
-          ) : (
-            <div className="py-20 text-center">
-
-              <h3 className="text-xl font-semibold">
-                No Resume Analyses Yet
-              </h3>
-
-              <p className="text-gray-500 mt-3">
-                Start by analyzing your first resume.
+      <div className="max-w-7xl mx-auto px-6 py-10">
+        {/* Hero Welcome Banner */}
+        <div className="glass-card rounded-3xl p-8 sm:p-10 border border-slate-800 shadow-2xl relative overflow-hidden mb-10">
+          <div className="absolute -right-10 -top-10 w-80 h-80 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none"></div>
+          <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 text-xs font-bold mb-4">
+                <FiZap className="text-indigo-400" /> AI Resume Optimizer Active
+              </div>
+              <h1 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
+                Welcome Back, <span className="text-gradient">{user?.name || "Job Seeker"}</span> 👋
+              </h1>
+              <p className="text-slate-400 mt-2 text-sm sm:text-base max-w-xl leading-relaxed">
+                Track your resume performance, ATS compatibility, and keyword matches against target job descriptions.
               </p>
-
-              <Link
-                to="/analyze"
-                className="inline-block mt-6 bg-indigo-600 text-white px-6 py-3 rounded-xl"
-              >
-                Analyze Resume
-              </Link>
-
             </div>
-          )}
 
+            <Link
+              to="/analyze"
+              className="inline-flex items-center justify-center gap-2.5 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 hover:from-indigo-500 hover:to-pink-500 text-white px-7 py-4 rounded-2xl font-bold shadow-glow transition-all duration-300 transform hover:-translate-y-0.5 text-sm"
+            >
+              <FiPlusCircle size={18} />
+              <span>New Resume Analysis</span>
+            </Link>
+          </div>
         </div>
 
+        {/* Stats Section */}
+        <div className="grid md:grid-cols-3 gap-6 mb-10">
+          <StatCard
+            title="Total Analyses"
+            value={total}
+            icon={FiFileText}
+            colorGradient="from-indigo-600 to-blue-600"
+            badgeText="Lifetime Total"
+          />
+          <StatCard
+            title="Average ATS Score"
+            value={`${average}%`}
+            icon={FiBarChart2}
+            colorGradient="from-purple-600 to-pink-600"
+            badgeText="Overall Match"
+          />
+          <StatCard
+            title="Highest ATS Score"
+            value={`${highest}%`}
+            icon={FiAward}
+            colorGradient="from-emerald-500 to-teal-600"
+            badgeText="Best Performance"
+          />
+        </div>
+
+        {/* Recent Analyses Feed */}
+        <div className="glass-card rounded-3xl p-8 border border-slate-800 shadow-xl">
+          <div className="flex justify-between items-center mb-6">
+            <div>
+              <h2 className="text-2xl font-black text-white tracking-tight">
+                Recent Analyses
+              </h2>
+              <p className="text-xs text-slate-400 mt-1">
+                Your latest ATS compatibility reports
+              </p>
+            </div>
+
+            <Link
+              to="/history"
+              className="text-xs font-bold text-indigo-400 hover:text-indigo-300 flex items-center gap-1 group"
+            >
+              <span>View Full History</span>
+              <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </div>
+
+          <div className="space-y-4">
+            {recent.length > 0 ? (
+              recent.map((analysis) => (
+                <RecentAnalysisCard key={analysis._id} analysis={analysis} />
+              ))
+            ) : (
+              <div className="py-16 text-center glass-card rounded-2xl border border-dashed border-slate-800">
+                <div className="w-16 h-16 rounded-2xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center mx-auto mb-4 border border-indigo-500/20">
+                  <FiFileText size={30} />
+                </div>
+                <h3 className="text-lg font-bold text-white">
+                  No Resume Reports Yet
+                </h3>
+                <p className="text-slate-400 text-xs mt-1 max-w-md mx-auto">
+                  Upload your resume against a job description to get instant ATS scores and actionable feedback.
+                </p>
+                <Link
+                  to="/analyze"
+                  className="inline-flex items-center gap-2 mt-5 bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2.5 rounded-xl text-xs font-bold transition shadow-glow"
+                >
+                  <FiPlusCircle /> Analyze First Resume
+                </Link>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
-
     </div>
-
-  </div>
-</>
-
-    );
-
+  );
 };
 
 export default Dashboard;

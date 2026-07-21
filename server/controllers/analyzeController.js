@@ -1,5 +1,5 @@
 import pdfParser from "../utils/pdfParser.js";
-import analyzeResume from "../utils/geminiClient.js";
+import analyzeResume from "../utils/groqClient.js";
 import Analysis from "../models/Analysis.js";
 
 const analyzeText = async (req, res) => {
@@ -36,7 +36,7 @@ const analyzeText = async (req, res) => {
         // Extract Resume Text
         const resumeText = await pdfParser(file.buffer);
 
-        // Analyze using Gemini
+        // Analyze using Groq
         const analysis = await analyzeResume(
             resumeText,
             jobDescription

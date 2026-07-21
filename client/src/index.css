@@ -1,125 +1,91 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap");
 @import "tailwindcss";
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+:root {
+  font-family: "Outfit", "Poppins", sans-serif;
+  color-scheme: light dark;
 }
 
-body{
-    font-family:"Poppins",sans-serif;
-    background:linear-gradient(
-        180deg,
-        #eef2ff 0%,
-        #f8fafc 40%,
-        #ffffff 100%
-    );
-    min-height:100vh;
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Outfit", "Poppins", sans-serif;
+  background-color: #0f172a;
+  color: #f8fafc;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
-#root{
-    width:100%;
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
 }
 
-.container{
-    width:100%;
-    max-width:430px;
-    margin:auto;
-    background:#fff;
-    padding:40px;
-    border-radius:20px;
-    box-shadow:0 20px 50px rgba(0,0,0,.08);
+::-webkit-scrollbar-track {
+  background: #0f172a;
 }
 
-.container h1{
-    text-align:center;
-    font-size:34px;
-    margin-bottom:8px;
-    color:#1e293b;
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 9999px;
 }
 
-.container::before{
-    content:"AI Resume Analyzer";
-    display:block;
-    text-align:center;
-    font-size:14px;
-    color:#667eea;
-    font-weight:600;
-    letter-spacing:1px;
-    margin-bottom:8px;
+::-webkit-scrollbar-thumb:hover {
+  background: #6366f1;
 }
 
-form{
-    margin-top:25px;
+/* Glassmorphism helper utilities */
+.glass-card {
+  background: rgba(30, 41, 59, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-input{
-    width:100%;
-    padding:15px 18px;
-    margin-bottom:18px;
-    border:1px solid #dbe4ff;
-    border-radius:12px;
-    font-size:15px;
-    transition:.3s;
-    outline:none;
+.glass-card-light {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(226, 232, 240, 0.8);
 }
 
-input:focus{
-    border-color:#667eea;
-    box-shadow:0 0 0 4px rgba(102,126,234,.15);
+.glass-nav {
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-button{
-    width:100%;
-    padding:15px;
-    border:none;
-    border-radius:12px;
-    background:#667eea;
-    color:#fff;
-    font-size:16px;
-    font-weight:600;
-    cursor:pointer;
-    transition:.3s;
+/* Animated gradient text */
+.text-gradient {
+  background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-button:hover{
-    background:#4f46e5;
-    transform:translateY(-2px);
+.text-gradient-cyan {
+  background: linear-gradient(135deg, #38bdf8 0%, #6366f1 50%, #a855f7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-button:disabled{
-    opacity:.7;
-    cursor:not-allowed;
+/* Soft glow shadow */
+.shadow-glow {
+  box-shadow: 0 0 40px -10px rgba(99, 102, 241, 0.35);
 }
 
-p{
-    margin-top:25px;
-    text-align:center;
-    color:#64748b;
-    font-size:15px;
+.shadow-glow-purple {
+  box-shadow: 0 0 40px -10px rgba(168, 85, 247, 0.35);
 }
 
-a{
-    margin-left:6px;
-    color:#4f46e5;
-    font-weight:600;
-    text-decoration:none;
+.shadow-glow-cyan {
+  box-shadow: 0 0 40px -10px rgba(56, 189, 248, 0.35);
 }
 
-a:hover{
-    text-decoration:underline;
-}
-
-@media(max-width:500px){
-
-.container{
-    width:92%;
-    padding:30px 25px;
-}
-
-.container h1{
-    font-size:28px;
-}
-
+/* Background animated mesh */
+.bg-mesh {
+  background-image:
+    radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(168, 85, 247, 0.15) 0px, transparent 50%),
+    radial-gradient(at 50% 100%, rgba(56, 189, 248, 0.1) 0px, transparent 50%);
 }
