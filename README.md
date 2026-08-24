@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🚀 AI Resume Analyzer
 
 An AI-powered Resume Analyzer built using the **MERN Stack** and **Google Gemini AI** that analyzes resumes against job descriptions, calculates an ATS score, identifies missing keywords, and provides actionable feedback to improve hiring chances.
@@ -297,3 +298,6 @@ If you found this project helpful, please consider giving it a ⭐ on GitHub.
 It motivates me to build more open-source projects!
 
 ---
+=======
+# resume-analyzer
+>>>>>>> c508bf14689880470a744df9595829a61515238c
