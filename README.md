@@ -82,7 +82,7 @@ AI_RESUME_ANALYZER
 ## 1. Clone Repository
 
 ```bash
-git clone https://github.com/karthikthorlapati/resume_analyzer.git
+git clone https://github.com/ajaysai157/resume-analyzer.git
 
 cd ai_resume_analyzer
 ```
@@ -283,10 +283,10 @@ git push origin feature-name
 
 # 👨‍💻 Author
 
-**Karthik Thorlapati**
+**Bhargav Ajay Sai Chonga**
 
-- GitHub: https://github.com/karthikthorlapati
-- LinkedIn: https://www.linkedin.com/in/karthik-thorlapati
+- GitHub: https://github.com/ajaysai157/resume-analyzer
+- LinkedIn: https://www.linkedin.com/in/bhargav-ajay-sai-chonga-0551a0334/
 
 ---
 
@@ -297,7 +297,3 @@ If you found this project helpful, please consider giving it a ⭐ on GitHub.
 It motivates me to build more open-source projects!
 
 ---
-
-## 📜 License
-
-This project is licensed under the MIT License.
